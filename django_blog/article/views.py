@@ -5,4 +5,5 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, "article/article.html")
+
+    return render(request, "article/index.html", context={'app_name': f"{__package__.split('.')[1]}"})
