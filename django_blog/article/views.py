@@ -1,14 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.views import View
+from .models import Article
+
+
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()[:15]
+        return render(request, 'article/index.html', context={'articles': articles})
 
 
 class ArticleView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, "article/index.html", context={
-            'app_name': f"{__package__.split('.')[1]}"
-            })
-
-
-def article_id(request, tags, article_id):
-    return HttpResponse(f'Статья номер {article_id}. Тег {tags}')
+        article = get_object_or_404(Article, id=kwargs['id'])
+        return render(request, 'article/show.html', context={'article': article})

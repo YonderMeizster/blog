@@ -3,6 +3,6 @@ from django_blog.article import views
 
 
 urlpatterns = [
-    path('', views.ArticleView.as_view()),
-    path('<str:tags>/<int:article_id>/', views.article_id, name="article")
+    path('', views.IndexView.as_view()),
+    path('<int:id>/', views.ArticleView.as_view(), name="article_id"),
 ]
