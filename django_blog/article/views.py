@@ -27,7 +27,7 @@ class CreateArticleView(View):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse('create_article'))
+            return redirect(reverse('articles'))
 
         return render(request, 'article/create.html',  context={'form': form})
 
@@ -51,3 +51,12 @@ class UpdateArticleView(View):
             return redirect(reverse('articles'))
 
         return render(request, 'articles/update.html', {'form' : form, 'article_id':article_id})
+
+
+class DeleteArticleView(View):
+    def get(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        if article:
+            article.delete()
+        return redirect('articles')
